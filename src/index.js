@@ -31,6 +31,7 @@ import './css/styles.css';
 import { ref } from './js/helpers/ref';
 import { fetchCountries } from './js/api/fetchCountries';
 import { isError } from './js/helpers/isErr';
+import { resetHTML } from './js/helpers/resetHTML';
 import { view } from './js/helpers/view';
 //#endregion #
 
@@ -47,7 +48,7 @@ ref.inputSearchBox.addEventListener
         funcDebounce((e) =>
         {
             let str = (e.target.value).trim();
-            
+            resetHTML(ref);
             if (str === '') return;
             //#region Request #
             const prom = fetchCountries(str, `?fields=${fields}`);
