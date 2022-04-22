@@ -1,25 +1,35 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { errMsg } from './isErr';
-export const view = (value, min, max) =>
+import { createCountryList, createSingleCountry} from './markup'
+
+const resetHTML = (ref) =>
+{
+    ref.divCountryInfo.innerHTML = '';
+    ref.ulCountryList.innerHTML = '';
+};
+export const view = (ref, value, min, max) =>
 {
     const valueAmount = Number(value.length);
-// 1
-    if (valueAmount === min) {
-        console.log(`1`);
+    ref.ulCountryList.innerHTML = '';
+    // 1
+    if (valueAmount === min)
+    {
+        resetHTML(ref);
+        //render murkup
+        ref.divCountryInfo.insertAdjacentHTML('beforeend', createSingleCountry(value));
     }
     // 2-10
     if (valueAmount > min &&
         valueAmount <= max)
     {
-        value.forEach(element => {
-        console.log(element.name.official);
-        // console.log(element.capital[0]);
-        // console.log(element.population);
-        // console.log(element.flags.svg);
-    });
+        resetHTML(ref);
+        //render murkup
+        ref.ulCountryList.insertAdjacentHTML('beforeend', createCountryList(value));
     }
     // +10
-    if (valueAmount > max) {
+    if (valueAmount > max)
+    {
+        resetHTML(ref);
         Notify.info(errMsg.tooMuch);
         return;
     }

@@ -24,7 +24,7 @@
  * +(x > 10) Якщо у відповіді бекенд повернув більше ніж 10 країн, в інтерфейсі з'являється повідомлення про те, що назва повинна бути специфічнішою. Для повідомлень використовуй бібліотеку notiflix і виводь такий рядок "Too many matches found. Please enter a more specific name.".
  * (x >= 2 && x <=10 ) Якщо бекенд повернув від 2-х до 10-и країн, під тестовим полем відображається список знайдених країн. Кожен елемент списку складається з прапора та назви країни.
  * (x === 1)Якщо результат запиту - це масив з однією країною, в інтерфейсі відображається розмітка картки з даними про країну: прапор, назва, столиця, населення і мови.
- * Якщо користувач ввів назву країни, якої не існує, бекенд поверне не порожній масив, а помилку зі статус кодом 404 - не знайдено. Якщо це не обробити, то користувач ніколи не дізнається про те, що пошук не дав результатів. Додай повідомлення "Oops, there is no country with that name" у разі помилки, використовуючи бібліотеку notiflix.
+ * +Якщо користувач ввів назву країни, якої не існує, бекенд поверне не порожній масив, а помилку зі статус кодом 404 - не знайдено. Якщо це не обробити, то користувач ніколи не дізнається про те, що пошук не дав результатів. Додай повідомлення "Oops, there is no country with that name" у разі помилки, використовуючи бібліотеку notiflix.
  */
 //#region Import #
 import './css/styles.css';
@@ -44,21 +44,22 @@ const fields = ['name', 'capital', 'population', 'flags', 'languages'];
 //#region Main #
 ref.inputSearchBox.addEventListener
     ('input',
-        funcDebounce((e) => {
-            console.clear();
+        funcDebounce((e) =>
+        {
             let str = (e.target.value).trim();
-            //#region Request #
+            
             if (str === '') return;
-
+            //#region Request #
             const prom = fetchCountries(str, `?fields=${fields}`);
-            console.log(prom);
             prom
-                .then(value => {
+                .then(value =>
+                {
                     if (!isError(value))
                     {
-                        view(value, countriesAmount.min, countriesAmount.max);
+                        view(ref, value, countriesAmount.min, countriesAmount.max);
                     }
                 })
-    }, DEBOUNCE_DELAY)
-);
+            //#endregion #
+        }, DEBOUNCE_DELAY)
+    );
     //#endregion #
