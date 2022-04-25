@@ -16,7 +16,7 @@ const errValue =
 export const isError = (value) =>
 {
     let res = true;
-    switch (value)
+    switch (value.message)
     {
         case errValue.addressStr:
         {

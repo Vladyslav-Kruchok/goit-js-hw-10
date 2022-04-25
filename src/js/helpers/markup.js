@@ -17,7 +17,7 @@ export const createSingleCountry = (valueObj) => {
         .map(({name: {official}, capital, population, flags: {svg}, languages }) =>
             `
                 <h1>
-                    <img class="country-icon" width="40" height="32" src="https://flagcdn.com/se.svg" alt="flag-${official}">
+                    <img class="country-icon" width="40" height="32" src="${svg}" alt="flag-${official}">
                     ${official}
                 </h1>
                 <p class="country-info-item"><span class="country-info-head">Capital: </span> ${capital}</p>
